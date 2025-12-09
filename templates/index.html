@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Mystery Boxes{% endblock %}
+
+{% block content %}
+<div class="card">
+  <header>
+    <h1>Mystery Boxes</h1>
+    <p>One of these boxes is a winner.<br>The others?<br>Death.</p>
+  </header>
+
+  <main>
+    <form method="POST" class="grid-form">
+      <input type="hidden" name="correct_index" value="{{ correct_index }}">
+
+      <div class="grid">
+        {% for i in range(grid_size * grid_size) %}
+          <button
+            type="submit"
+            name="choice"
+            value="{{ i }}"
+            class="square {% if chosen_index is not none and i == chosen_index %}square--selected{% endif %}"
+          >
+            {{ i + 1 }}
+          </button>
+        {% endfor %}
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="result {% if is_correct %}result--success{% else %}result--error{% endif %}">
+        {{ result|safe }}
+      </div>
+    {% endif %}
+
+    <p class="hint">
+      Click around until you question your life choices.
+    </p>
+  </main>
+</div>
+{% endblock %}
